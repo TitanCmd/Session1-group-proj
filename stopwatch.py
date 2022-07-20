@@ -31,7 +31,7 @@ class Stopwatch:
         self.reset_button.grid(row=0, column=2, padx=10, pady=10)
         self.lap_button = Button(self.master, text="Lap", command=self.lap)
         self.lap_button.grid(row=0, column=3, padx=10, pady=10)
-        self.time_label = Label(self.master, text="0:00:00:00", font=("Helvetica", 20))
+        self.time_label = Label(self.master, text="0:00:00:0", font=("Helvetica", 20))
         self.time_label.grid(row=1, column=0, columnspan=4, padx=10, pady=10)
         self.lap_times_label = Label(self.master, text="", font=("Helvetica", 14))
         self.lap_times_label.grid(row=2, column=0, columnspan=4, padx=10, pady=10)
@@ -87,7 +87,7 @@ class Stopwatch:
         minutes = (time // 600) - (hours * 60)
         seconds = (time // 10) - (minutes * 60)
         miliseconds = time % 10
-        return "{:02d}:{:02d}:{:02d}:{:02d}".format(hours, minutes, seconds, miliseconds)
+        return "{:02d}:{:02d}:{:02d}:{:01d}".format(hours, minutes, seconds, miliseconds)
     
     def main(self):
         self.master.mainloop()
