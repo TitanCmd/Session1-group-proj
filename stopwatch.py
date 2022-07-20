@@ -52,10 +52,12 @@ class Stopwatch:
 
     def save(self):
         """
-        Writes time to a file (
+        Writes time to a file (rand num) TODO DATETIME
         """
-        with open(f"{datetime.date()} {randint(1, 1000)}", 'w') as time_log:
+        file_title = f"{randint(1, 1000)}.txt"
+        with open(file_title, 'w') as time_log:
             time_log.write(f"{self.time}")
+            print(file_title)
     
     def update_time(self):
         if self.is_running:
