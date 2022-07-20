@@ -37,6 +37,7 @@ class Stopwatch:
         self.lap_times_label.grid(row=2, column=0, columnspan=4, padx=10, pady=10)
         self.save_button = Button(self.master, text="Save", command=self.save)
         self.save_button.grid(row=0, column=4, padx=10, pady=10)
+        self.load()
     
     def start(self):
         self.is_running = True
@@ -73,11 +74,31 @@ class Stopwatch:
         with open(file_title, 'w') as time_log:
             csv_interpreter = csv.writer(time_log)
 
-            # if there are laps bring them in instead
-            if len(self.times) >= 1:
-                csv_interpreter.writerows(self.times)
-            else:
-                csv_interpreter.writerow([self.time])
+            for row in self.times:
+                csv_interpreter.writerow(row)
+                
+    def load(self):
+        """
+        Loads time from a file ()
+        :return: 
+        """
+
+        print("load")
+
+        file_title = f"times.csv"
+        with open(file_title, 'r') as time_log:
+            csv_interpreter = csv.reader(time_log)
+            self.times = []
+
+            for row in csv_interpreter:
+                self.times.append([])
+                for column in row:
+                    self.times[-1].append(column)
+
+            for time in self.times:
+                print(time)
+                if len(time) > 1:
+                    self.lap_times_label['text'] += f"Lap {str(time[0])} : {self.time_to_string(int(time[1]))}\n"
 
     def update_time(self):
         if self.is_running:
