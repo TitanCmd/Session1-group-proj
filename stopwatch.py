@@ -14,8 +14,8 @@ class Stopwatch:
     def __init__(self, master):
         self.master = master
         self.master.title("Stopwatch")
-        self.master.geometry("400x200")
-        self.master.resizable(False, False)
+        self.master.geometry("600x300")
+        self.master.resizable(True, True)
         self.master.configure(background="white")
         self.time = 0
         self.times = []
