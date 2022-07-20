@@ -50,7 +50,7 @@ class Stopwatch:
         if self.is_running:
             self.time += 1
             self.time_label.config(text=self.time_to_string(self.time))
-            self.master.after(1000, self.update_time)
+            self.master.after(100, self.update_time)
         else:
             self.time_label.config(text=self.time_to_string(self.time))
     
