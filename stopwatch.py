@@ -52,10 +52,13 @@ class Stopwatch:
         self.reset_button.config(state=NORMAL)
 
     def lap(self):
-        self.times.append([len(self.times) + 1, self.time])
+        
 
-        if len(self.times) > 1:
+        if len(self.times) >= 1:
             self.lap_times_label['text'] += "\n"
+            self.times.append([len(self.times) + 1, abs(self.times[-1][2]-self.time), self.time])
+        else:
+            self.times.append([len(self.times) + 1, self.time, self.time])
 
         self.lap_times_label['text'] += "Lap " + str(self.times[-1][0]) + ": " + self.time_to_string(self.times[-1][1])
 
