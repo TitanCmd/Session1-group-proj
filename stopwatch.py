@@ -1,5 +1,7 @@
 from tkinter import *
 import time
+from random import randint
+from datetime import datetime
 import sys
 
 """
@@ -31,9 +33,10 @@ class Stopwatch:
         self.lap_button.grid(row=0, column=3, padx=10, pady=10)
         self.time_label = Label(self.master, text="0:00:00", font=("Helvetica", 20))
         self.time_label.grid(row=1, column=0, columnspan=4, padx=10, pady=10)
-
         self.lap_times_label = Label(self.master, text="", font=("Helvetica", 14))
         self.lap_times_label.grid(row=2, column=0, columnspan=4, padx=10, pady=10)
+        self.save_button = Button(self.master, text="Save", command=self.save)
+        self.save_button.grid(row=0, column=4, padx=10, pady=10)
     
     def start(self):
         self.is_running = True
@@ -61,6 +64,15 @@ class Stopwatch:
         self.times = []
         self.lap_times_label['text'] = ""
         self.update_time()
+
+    def save(self):
+        """
+        Writes time to a file (rand num) TODO DATETIME
+        """
+        file_title = f"{randint(1, 1000)}.txt"
+        with open(file_title, 'w') as time_log:
+            time_log.write(f"{self.time}")
+            print(file_title)
 
     def update_time(self):
         if self.is_running:
