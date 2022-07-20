@@ -18,6 +18,7 @@ class Stopwatch:
         self.master.resizable(False, False)
         self.master.configure(background="white")
         self.time = 0
+        self.times = []
         self.is_running = False
         self.create_widgets()
 
@@ -28,10 +29,14 @@ class Stopwatch:
         self.stop_button.grid(row=0, column=1, padx=10, pady=10)
         self.reset_button = Button(self.master, text="Reset", command=self.reset)
         self.reset_button.grid(row=0, column=2, padx=10, pady=10)
+        self.lap_button = Button(self.master, text="Lap", command=self.lap)
+        self.lap_button.grid(row=0, column=3, padx=10, pady=10)
         self.time_label = Label(self.master, text="0:00:00", font=("Helvetica", 20))
-        self.time_label.grid(row=1, column=0, columnspan=3, padx=10, pady=10)
+        self.time_label.grid(row=1, column=0, columnspan=4, padx=10, pady=10)
+        self.lap_times_label = Label(self.master, text="", font=("Helvetica", 14))
+        self.lap_times_label.grid(row=2, column=0, columnspan=4, padx=10, pady=10)
         self.save_button = Button(self.master, text="Save", command=self.save)
-        self.save_button.grid(row=2, column=1, padx=10, pady=10)
+        self.save_button.grid(row=0, column=4, padx=10, pady=10)
     
     def start(self):
         self.is_running = True
@@ -46,8 +51,18 @@ class Stopwatch:
         self.stop_button.config(state=DISABLED)
         self.reset_button.config(state=NORMAL)
 
+    def lap(self):
+        self.times.append([len(self.times) + 1, self.time])
+
+        if len(self.times) > 1:
+            self.lap_times_label['text'] += "\n"
+
+        self.lap_times_label['text'] += "Lap " + str(self.times[-1][0]) + ": " + self.time_to_string(self.times[-1][1])
+
     def reset(self):
         self.time = 0
+        self.times = []
+        self.lap_times_label['text'] = ""
         self.update_time()
 
     def save(self):
@@ -58,7 +73,7 @@ class Stopwatch:
         with open(file_title, 'w') as time_log:
             time_log.write(f"{self.time}")
             print(file_title)
-    
+
     def update_time(self):
         if self.is_running:
             self.time += 1
