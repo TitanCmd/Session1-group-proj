@@ -1,7 +1,7 @@
 from tkinter import *
 import time
 from random import randint
-from datetime import datetime
+import csv
 import sys
 
 """
@@ -67,12 +67,17 @@ class Stopwatch:
 
     def save(self):
         """
-        Writes time to a file (rand num) TODO DATETIME
+        Writes time to a file (laps if laps are recorded or single time if not)
         """
-        file_title = f"{randint(1, 1000)}.txt"
+        file_title = f"times.csv"
         with open(file_title, 'w') as time_log:
-            time_log.write(f"{self.time}")
-            print(file_title)
+            csv_interpreter = csv.writer(time_log)
+
+            # if there are laps bring them in instead
+            if len(self.times) >= 1:
+                csv_interpreter.writerows(self.times)
+            else:
+                csv_interpreter.writerow([self.time])
 
     def update_time(self):
         if self.is_running:
